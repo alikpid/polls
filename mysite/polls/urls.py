@@ -7,8 +7,7 @@ app_name = 'polls'
 
 urlpatterns = [
     path('accounts/profile/', profile, name='profile'),
-    path('accounts/register/done/', views.RegisterDoneView.as_view(), name='register_done'),
-    # path('accounts/register/', views.RegisterUserView.as_view(), name='register'),
+    path('register/', views.register, name='register'),
     path('accounts/logout/', views.BBLogoutView.as_view(), name='logout'),
     path('accounts/login', views.BBLoginView.as_view(), name='login'),
     path('', views.IndexView.as_view(), name='index'),

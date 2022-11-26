@@ -9,11 +9,8 @@
    {% if user.first_name and user.last_name %}
 <!--    <img class="rounded-circle account-img" src="{{ user.profile.img.url }}">-->
 
-        {% if advuser.img %}
-        <img class="rounded-circle account-img" src="{{ user.advuser.img.url }}" height=100 width=100><br><br>
-        {% else %}
-        <img class="rounded-circle account-img" src="{% static 'main/empty.jpg' %}" height=100 width=100><br><br>
-        {% endif %}
+<!--        <img class="rounded-circle account-img" src="{{ user.advuser.img.url }}" height=100 width=100><br><br>-->
+        <img class="rounded-circle account-img" src="{{ user.profile.image.url }}" height=100 width=100>
 
        <p>Здравствуйте, {{ user.first_name }} {{ user.last_name }} </p>
    {% else %}
