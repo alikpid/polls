@@ -1,5 +1,6 @@
 from django.contrib.auth.decorators import login_required
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView, LogoutView
 from django.shortcuts import render
 from django.shortcuts import render, get_object_or_404
@@ -8,9 +9,7 @@ from .models import Question, Choice
 from django.template import loader
 from django.urls import reverse
 from django.views import generic
-from .models import AdvUser
 from django.views.generic import CreateView
-from .forms import RegisterUserForm
 from django.views.generic.base import TemplateView
 from django.urls import reverse_lazy
 
@@ -48,11 +47,11 @@ def vote(request, question_id):
         return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
 
 
-class RegisterUserView(CreateView):
-    model = AdvUser
-    template_name = 'polls/register_user.html'
-    form_class = RegisterUserForm
-    success_url = reverse_lazy('polls:register_done')
+# class RegisterUserView(CreateView):
+#     model = User
+#     template_name = 'polls/register_user.html'
+#     form_class = RegisterUserForm
+#     success_url = reverse_lazy('polls:register_done')
 
 
 class RegisterDoneView(TemplateView):
