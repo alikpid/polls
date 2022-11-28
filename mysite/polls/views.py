@@ -1,9 +1,12 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView, LogoutView
 from django.shortcuts import render
 from django.shortcuts import render, get_object_or_404
 from django.http import HttpResponse, HttpResponseRedirect
-from .models import Question, Choice
+
+from .forms import UserRegisterForm
+from .models import Question, Choice, Profile
 from django.template import loader
 from django.urls import reverse
 from django.views import generic
@@ -71,7 +74,7 @@ def profile(request):
             u_form.save()
             p_form.save()
             messages.success(request, f'Ваш профиль успешно обновлен.')
-            return redirect('profile')
+            return redirect('polls:profile')
 
     else:
         u_form = UserUpdateForm(instance=request.user)
@@ -81,7 +84,6 @@ def profile(request):
         'u_form': u_form,
         'p_form': p_form
     }
-
     return render(request, 'polls/profile.html', context)
 
 
@@ -91,5 +93,3 @@ class BBLoginView(LoginView):
 
 class BBLogoutView(LoginRequiredMixin, LogoutView):
     template_name = 'polls/logout.html'
-
-

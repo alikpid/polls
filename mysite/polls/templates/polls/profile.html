@@ -1,21 +1,24 @@
 {% extends "polls/basic.html" %}
-{% load thumbnail %}
-{% load static %}
-{% load bootstrap4 %}
-{% block title %} Профиль пользователя {% endblock %}
-
+{% load crispy_forms_tags %}
 {% block content %}
-   <h2>Профиль пользователя {{ user.username }}</h2>
-   {% if user.first_name and user.last_name %}
-<!--    <img class="rounded-circle account-img" src="{{ user.profile.img.url }}">-->
-
-<!--        <img class="rounded-circle account-img" src="{{ user.advuser.img.url }}" height=100 width=100><br><br>-->
-        <img class="rounded-circle account-img" src="{{ user.profile.image.url }}" height=100 width=100>
-
-       <p>Здравствуйте, {{ user.first_name }} {{ user.last_name }} </p>
-   {% else %}
-       <p>Здравствуйте! </p>
-   {% endif %}
-{% endblock %}
-
-<!-- добавить аватар-->
+	<div class="content-section">
+  	<div class="media">
+    	<img class="rounded-circle account-img" src="{{ user.profile.image.url }}">
+    	<div class="media-body">
+      	<h2 class="account-heading">{{ user.username }}</h2>
+  	    <p class="text-secondary">{{ user.email }}</p>
+    	</div>
+  	</div>
+  	   	<form method="POST" enctype="multipart/form-data">
+      	{% csrf_token %}
+      	<fieldset class="form-group">
+          	<legend class="border-bottom mb-4">Ваш профиль</legend>
+          	{{ u_form|crispy }}
+              {{ p_form|crispy }}
+      	</fieldset>
+      	<div class="form-group">
+          	<button class="btn btn-outline-info" type="submit">Обновить</button>
+      	</div>
+  	</form>
+	</div>
+{% endblock content %}

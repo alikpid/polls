@@ -39,7 +39,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'polls.apps.PollsConfig',
     'bootstrap4',
-    'easy_thumbnails',
+    'crispy_forms',
 ]
 
 MIDDLEWARE = [
