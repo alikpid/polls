@@ -49,3 +49,9 @@ class Profile(models.Model):
             output_size = (300, 300)
             img.thumbnail(output_size)
             img.save(self.image.path)
+
+
+class Vote(models.Model):
+    voter = models.ForeignKey(User, verbose_name='Пользователь', related_name='+', on_delete=models.CASCADE)
+    question_vote = models.ForeignKey(Question, verbose_name='Опросик', on_delete=models.CASCADE)
+

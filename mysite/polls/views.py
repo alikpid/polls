@@ -1,13 +1,9 @@
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.auth.models import User
 from django.contrib.auth.views import LoginView, LogoutView
-from django.shortcuts import render
-from django.shortcuts import render, get_object_or_404
-from django.http import HttpResponse, HttpResponseRedirect
+from django.shortcuts import get_object_or_404
+from django.http import HttpResponseRedirect
 
-from .forms import UserRegisterForm
-from .models import Question, Choice, Profile
-from django.template import loader
+from .models import Question, Choice, Vote
 from django.urls import reverse
 from django.views import generic
 
@@ -36,18 +32,26 @@ class ResultsView(generic.DetailView):
 
 
 def vote(request, question_id):
-    question = get_object_or_404(Question, pk=question_id)
+    question_vote = get_object_or_404(Question, pk=question_id)
+    vote, created = Vote.objects.get_or_create(voter=request.user, question_vote=question_vote)
+    if not created:
+        return render(request, 'polls/detail.html', {
+            'question': question_vote,
+            'error_message': 'Голосовать можно только один раз'
+        })
     try:
-        selected_choice = question.choice_set.get(pk=request.POST['choice'])
+        selected_choice = question_vote.choice_set.get(pk=request.POST['choice'])
     except (KeyError, Choice.DoesNotExist):
         return render(request, 'polls/detail.html', {
-            'question': question,
-            'error_message': 'вы не сделали выбор'
+            'question': question_vote,
+            'error_message': 'Вы не сделали выбор'
         })
+
     else:
         selected_choice.votes += 1
         selected_choice.save()
-        return HttpResponseRedirect(reverse('polls:results', args=(question.id,)))
+
+    return HttpResponseRedirect(reverse('polls:results', args=(question_vote.id,)))
 
 
 def register(request):

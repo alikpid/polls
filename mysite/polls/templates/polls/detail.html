@@ -11,7 +11,12 @@
         <input type="radio" name="choice" id="choice{{forloop.counter}}" value="{{choice.id}}">
         <label for="choice{{forloop.counter}}">{{choice.choice_text}}</label><br>
         {% endfor %}
+        <br>
+        <div>{{ question.poll_description }}</div>
+        <img class="img-thumbnail" src="{{question.img.url }}" height="350" width="350">
+
     </fieldset>
+    <br>
 <input type="submit" value="Vote">
 </form>
 {% endblock %}
