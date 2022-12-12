@@ -14,7 +14,7 @@ class Question(models.Model):
     pub_date = models.DateTimeField('date published')
     post_description = models.CharField(default='', max_length=200, verbose_name='Краткое описание')
     poll_description = models.CharField(default='', max_length=200, verbose_name='Подробное описание')
-    img = models.ImageField(default='default_poll', max_length=200, verbose_name='Картинка', upload_to='vote_pics', blank=True, null=True,
+    img = models.ImageField(default='default_poll.jpg', max_length=200, verbose_name='Картинка', upload_to='vote_pics', blank=True, null=True,
                             validators=[FileExtensionValidator(allowed_extensions=['png', 'jpg', 'jpeg'])])
 
     def was_published_recently(self):
